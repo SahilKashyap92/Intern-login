@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leaderboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Leaderboard</h2>
+    <ol id="leaderboard"></ol>
+    <a href="index.html">← Back to Dashboard</a>
+  </div>
+
+  <script>
+    fetch('http://localhost:5000/api/leaderboard')
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById('leaderboard');
+        data.forEach(entry => {
+          const li = document.createElement('li');
+          li.textContent = `${entry.name} - $${entry.donations}`;
+          list.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>

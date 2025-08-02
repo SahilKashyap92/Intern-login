@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome, <span id="internName"></span>!</h1>
+    <p>Referral Code: <strong id="referralCode"></strong></p>
+    <p>Total Donations Raised: <strong id="donations"></strong></p>
+
+    <h3>Rewards & Unlockables</h3>
+    <ul id="rewardsList"></ul>
+
+    <a href="leaderboard.html">View Leaderboard</a>
+  </div>
+
+  <script>
+    fetch('http://localhost:5000/api/intern')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('internName').textContent = data.name;
+        document.getElementById('referralCode').textContent = data.referralCode;
+        document.getElementById('donations').textContent = `$${data.totalDonations}`;
+        const list = document.getElementById('rewardsList');
+        data.rewards.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          list.appendChild(li);
+        });
+      });
+  </script>
+</body>
+</html>
